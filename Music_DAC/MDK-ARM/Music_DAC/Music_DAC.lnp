@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp.sp
+"music_dac\startup_stm32f405xx.o"
+"music_dac\soundvalue.o"
+"music_dac\main.o"
+"music_dac\stm32f4xx_it.o"
+"music_dac\stm32f4xx_hal_msp.o"
+"music_dac\stm32f4xx_hal_dac.o"
+"music_dac\stm32f4xx_hal_dac_ex.o"
+"music_dac\stm32f4xx_hal_rcc.o"
+"music_dac\stm32f4xx_hal_rcc_ex.o"
+"music_dac\stm32f4xx_hal_flash.o"
+"music_dac\stm32f4xx_hal_flash_ex.o"
+"music_dac\stm32f4xx_hal_flash_ramfunc.o"
+"music_dac\stm32f4xx_hal_gpio.o"
+"music_dac\stm32f4xx_hal_dma_ex.o"
+"music_dac\stm32f4xx_hal_dma.o"
+"music_dac\stm32f4xx_hal_pwr.o"
+"music_dac\stm32f4xx_hal_pwr_ex.o"
+"music_dac\stm32f4xx_hal_cortex.o"
+"music_dac\stm32f4xx_hal.o"
+"music_dac\stm32f4xx_hal_exti.o"
+"music_dac\stm32f4xx_hal_tim.o"
+"music_dac\stm32f4xx_hal_tim_ex.o"
+"music_dac\system_stm32f4xx.o"
+--strict --scatter "Music_DAC\Music_DAC.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Music_DAC.map" -o Music_DAC\Music_DAC.axf
