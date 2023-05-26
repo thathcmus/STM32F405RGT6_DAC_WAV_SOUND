@@ -31,7 +31,14 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+inline uint8_t numHbit(uint16_t data){
+	uint8_t num = 0;
+	while(data){
+		if(data && 0x01) num++;
+		data = data >> 1;
+	}
+	return num;
+}
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -46,6 +53,9 @@ DMA_HandleTypeDef hdma_dac2;
 TIM_HandleTypeDef htim7;
 
 /* USER CODE BEGIN PV */
+uint8_t bitShift = 0;
+uint8_t numLed = 1;
+uint16_t delayInc = 0;
 
 /* USER CODE END PV */
 
@@ -98,13 +108,15 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	
 	// Configure and Start DMA1
-	DMA_Configure();
+	//DMA_Configure();
 	
 	// Start TIM7
 	HAL_TIM_Base_Start(&htim7);
 	
 	// Start DAC by trigger TIM7
-	//HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_2, (uint32_t*)&soundValue, 65460, DAC_ALIGN_8B_R);
+	
+	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_2, (uint32_t*)&soundValue, 105462, DAC_ALIGN_8B_R);
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -114,8 +126,24 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2);
-		HAL_Delay(500);
+		uint16_t valueLed = (numLed << bitShift);
+		bitShift++;
+		
+		if(bitShift > 4 - numHbit(numLed)){
+			bitShift = 0;
+			numLed |= (numLed<<1);
+		}
+		
+		HAL_GPIO_WritePin(GPIOB, valueLed, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB, ~valueLed, GPIO_PIN_RESET);
+		
+		delayInc = numLed * 50;
+		HAL_Delay(delayInc);
+		
+		if(numLed > 0x7){
+			numLed = 1;
+		}
+		
   }
   /* USER CODE END 3 */
 }
@@ -278,10 +306,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PB0 PB1 PB2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2;
+  /*Configure GPIO pins : PB0 PB1 PB2 PB3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -302,7 +330,7 @@ void DMA_Configure(){
   hdma_dac2.Init.MemInc = DMA_MINC_ENABLE;
   hdma_dac2.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
   hdma_dac2.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-  hdma_dac2.Init.Mode = DMA_CIRCULAR;
+  hdma_dac2.Init.Mode = DMA_NORMAL;
   hdma_dac2.Init.Priority = DMA_PRIORITY_VERY_HIGH;
   hdma_dac2.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
 
