@@ -31,6 +31,11 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define NUMDATA 105462
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
 inline uint8_t numHbit(uint16_t data){
 	uint8_t num = 0;
 	while(data){
@@ -39,11 +44,6 @@ inline uint8_t numHbit(uint16_t data){
 	}
 	return num;
 }
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -56,7 +56,6 @@ TIM_HandleTypeDef htim7;
 uint8_t bitShift = 0;
 uint8_t numLed = 1;
 uint16_t delayInc = 0;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -114,8 +113,7 @@ int main(void)
 	HAL_TIM_Base_Start(&htim7);
 	
 	// Start DAC by trigger TIM7
-	
-	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_2, (uint32_t*)&soundValue, 105462, DAC_ALIGN_8B_R);
+	//HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_2, (uint32_t*)&soundValue, NUMDATA, DAC_ALIGN_8B_R);
 	
   /* USER CODE END 2 */
 
@@ -126,6 +124,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		
 		uint16_t valueLed = (numLed << bitShift);
 		bitShift++;
 		
@@ -339,7 +338,8 @@ void DMA_Configure(){
 
   // Link DMA and DAC
   __HAL_LINKDMA(&hdac, DMA_Handle2, hdma_dac2);
-}
+}	
+
 /* USER CODE END 4 */
 
 /**

@@ -32,4 +32,5 @@ music_dac\stm32f4xx_hal_adc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_
 music_dac\stm32f4xx_hal_adc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 music_dac\stm32f4xx_hal_adc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 music_dac\stm32f4xx_hal_adc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
-music_dac\stm32f4xx_hal_adc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+music_dac\stm32f4xx_hal_adc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+music_dac\stm32f4xx_hal_adc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
