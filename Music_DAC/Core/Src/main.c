@@ -106,14 +106,11 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 	
-	// Configure and Start DMA1
-	//DMA_Configure();
-	
 	// Start TIM7
 	HAL_TIM_Base_Start(&htim7);
 	
 	// Start DAC by trigger TIM7
-	//HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_2, (uint32_t*)&soundValue, NUMDATA, DAC_ALIGN_8B_R);
+	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_2, (uint32_t*)&soundValue, NUMDATA, DAC_ALIGN_8B_R);
 	
   /* USER CODE END 2 */
 
@@ -320,25 +317,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void DMA_Configure(){
-	// Configure DMA Channel
-  hdma_dac2.Instance = DMA1_Stream6;
-  hdma_dac2.Init.Channel = DMA_CHANNEL_7;
-  hdma_dac2.Init.Direction = DMA_MEMORY_TO_PERIPH;
-  hdma_dac2.Init.PeriphInc = DMA_PINC_DISABLE;
-  hdma_dac2.Init.MemInc = DMA_MINC_ENABLE;
-  hdma_dac2.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-  hdma_dac2.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-  hdma_dac2.Init.Mode = DMA_NORMAL;
-  hdma_dac2.Init.Priority = DMA_PRIORITY_VERY_HIGH;
-  hdma_dac2.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-
-  // Start DMA
-  HAL_DMA_Init(&hdma_dac2);
-
-  // Link DMA and DAC
-  __HAL_LINKDMA(&hdac, DMA_Handle2, hdma_dac2);
-}	
 
 /* USER CODE END 4 */
 
