@@ -20,6 +20,6 @@
 ## Tác giả
 ### Huynh Chi That
 - [My blogger](https://tudienembedded.blogspot.com)
-- [Gỉthub](https://github.com/thathcmus)
-- [Facebook](https://www.facebook.com/Chithat2105)
+- [Github](https://github.com/thathcmus)
 - [Linkedin](https://www.linkedin.com/in/hcthat)
+- [Facebook](https://www.facebook.com/Chithat2105)
